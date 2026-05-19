@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Showcase — todos os recursos HTML5 com tema Oceano & Cosmos">
+    <meta name="author" content="Seu Nome">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Oceano & Cosmos — Showcase</title>
+    <style>
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .demo-block {
+            background: rgba(4,21,41,.8);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0,212,255,.15);
+            border-top: 3px solid var(--clr-primary);
+            transition: transform .3s ease, border-color .3s ease;
+        }
+
+        .demo-block:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,212,255,.4);
+        }
+
+        .demo-block h3 {
+            font-family: var(--ff-display);
+            color: var(--clr-primary);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        .tag-badge {
+            display: inline-block;
+            background: rgba(0,212,255,.15);
+            color: var(--clr-primary);
+            border: 1px solid rgba(0,212,255,.3);
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: .75rem;
+            font-family: var(--ff-mono);
+            margin: 2px;
+        }
+
+        .sc-input {
+            width: 100%;
+            padding: .6rem 1rem;
+            border: 2px solid rgba(0,212,255,.2);
+            border-radius: 8px;
+            background: rgba(2,11,24,.9);
+            color: var(--clr-light);
+            font-family: var(--ff-base);
+            font-size: .9rem;
+            margin-bottom: .6rem;
+        }
+
+        .sc-input:focus {
+            outline: none;
+            border-color: var(--clr-primary);
+            box-shadow: 0 0 0 3px rgba(0,212,255,.1);
+        }
+
+        .sc-input::placeholder { color: rgba(232,244,248,.3); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .85rem;
+        }
+
+        th {
+            background: linear-gradient(135deg, rgba(0,212,255,.2), rgba(124,58,237,.2));
+            color: var(--clr-primary);
+            padding: .5rem;
+            text-align: left;
+            font-family: var(--ff-display);
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: .5rem;
+            border-bottom: 1px solid rgba(0,212,255,.1);
+            color: rgba(232,244,248,.8);
+        }
+
+        tr:nth-child(even) td { background: rgba(4,21,41,.5); }
+
+        caption {
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: var(--clr-primary);
+            font-family: var(--ff-display);
+            letter-spacing: 1px;
+        }
+
+        tfoot td {
+            font-style: italic;
+            font-size: .78rem;
+            color: rgba(232,244,248,.4);
+        }
+
+        /* Dialog temático */
+        dialog {
+            border: none;
+            border-radius: 16px;
+            padding: 2rem;
+            background: var(--clr-deep);
+            box-shadow: 0 8px 48px rgba(0,212,255,.3);
+            max-width: 400px;
+            width: 90%;
+            color: var(--clr-light);
+        }
+
+        dialog::backdrop {
+            background: rgba(2,11,24,.85);
+            backdrop-filter: blur(6px);
+        }
+
+        dialog h3 {
+            font-family: var(--ff-display);
+            color: var(--clr-primary);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        /* Storage output */
+        #sc-storage-out {
+            background: rgba(2,11,24,.9);
+            color: #00d4ff;
+            border-radius: 8px;
+            padding: .8rem;
+            font-size: .78rem;
+            min-height: 50px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            border: 1px solid rgba(0,212,255,.15);
+            font-family: var(--ff-mono);
+        }
+
+        /* SVG animado */
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 3px solid var(--clr-primary);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: rgba(232,244,248,.7);
+            font-style: italic;
+        }
+
+        /* DL */
+        dt { font-weight: 700; color: var(--clr-primary); margin-top: .5rem; }
+        dd { padding-left: 1rem; color: rgba(232,244,248,.7); font-size: .9rem; }
+
+        /* Code inline */
+        code {
+            background: rgba(0,212,255,.1);
+            color: var(--clr-primary);
+            padding: .1rem .4rem;
+            border-radius: 4px;
+            font-family: var(--ff-mono);
+            font-size: .85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ HEADER / NAV ═══ -->
+    <header>
+        <nav class="nav-container" aria-label="Navegação principal">
+            <a href="index.html" class="nav-logo">✦ OCEANO & COSMOS</a>
+            <button id="menu-btn" class="btn-menu" aria-expanded="false"
+                    aria-controls="nav-links" aria-label="Abrir menu">☰</button>
+            <ul class="nav-links" id="nav-links" role="list">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="formulario.html">Expedição</a></li>
+                <li><a href="galeria.html">Galeria</a></li>
+                <li><a href="showcase.html" aria-current="page">Showcase</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- ═══ HERO SHOWCASE ═══ -->
+        <section class="hero" style="min-height:50vh;">
+            <canvas id="starCanvas" aria-hidden="true"></canvas>
+            <div class="hero-content fade-in">
+                <h1>✦ HTML5 Showcase</h1>
+                <p>Todos os recursos HTML5 reunidos — com o tema Oceano & Cosmos</p>
+                <div style="display:flex; gap:.5rem; justify-content:center;
+                    flex-wrap:wrap; margin-top:1.5rem;">
+                    <span class="tag-badge">&lt;semantic&gt;</span>
+                    <span class="tag-badge">&lt;table&gt;</span>
+                    <span class="tag-badge">&lt;form&gt;</span>
+                    <span class="tag-badge">&lt;canvas&gt;</span>
+                    <span class="tag-badge">&lt;svg&gt;</span>
+                    <span class="tag-badge">&lt;dialog&gt;</span>
+                    <span class="tag-badge">GeoAPI</span>
+                    <span class="tag-badge">Storage</span>
+                    <span class="tag-badge">DragDrop</span>
+                    <span class="tag-badge">Clipboard</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ GRID DE DEMOS ═══ -->
+        <div class="showcase-grid">
+
+            <!-- 1. Texto Semântico -->
+            <div class="demo-block">
+                <h3>📝 Texto & Semântica</h3>
+                <p style="line-height:2; color:rgba(232,244,248,.8);">
+                    <mark style="background:rgba(0,212,255,.25); color:var(--clr-primary); padding:0 4px; border-radius:3px;">Bioluminescência</mark>
+                    com <code>&lt;mark&gt;</code>,
+                    <abbr title="Remotely Operated Vehicle" style="color:var(--clr-primary); border-bottom:1px dotted;">ROV</abbr>,
+                    <cite style="color:rgba(232,244,248,.6);">NASA Hubble</cite>,
+                    <kbd style="background:rgba(0,212,255,.1); border:1px solid rgba(0,212,255,.3); padding:1px 6px; border-radius:4px; font-size:.85rem;">Ctrl+C</kbd>,
+                    <del style="color:rgba(232,244,248,.4);">inexplorado</del>
+                    <ins style="color:var(--clr-success);">descoberto</ins>,
+                    H<sub>2</sub>O e E=mc<sup>2</sup>.
+                </p>
+                <blockquote>
+                    "O oceano profundo e o espaço sideral são os dois maiores mistérios da humanidade."
+                </blockquote>
+                <p style="font-size:.85rem; color:rgba(232,244,248,.5);">
+                    Última expedição:
+                    <time datetime="2025-03-21" style="color:var(--clr-primary);">
+                        21 de março de 2025
+                    </time>
+                </p>
+            </div>
+
+            <!-- 2. Listas -->
+            <div class="demo-block">
+                <h3>📋 Listas HTML5</h3>
+                <ul style="padding-left:1.2rem; margin-bottom:.8rem; color:rgba(232,244,248,.8);">
+                    <li style="margin:.3rem 0;">🌊 Fossa das Marianas — 11 km</li>
+                    <li style="margin:.3rem 0;">🌊 Zona Abissal — 6 km</li>
+                    <li style="margin:.3rem 0;">🌊 Zona Meso-pelágica — 1 km</li>
+                </ul>
+                <ol style="padding-left:1.2rem; margin-bottom:.8rem; color:rgba(232,244,248,.8);">
+                    <li style="margin:.3rem 0;">⭐ Mercúrio — 77 milhões km</li>
+                    <li style="margin:.3rem 0;">⭐ Vênus — 261 milhões km</li>
+                    <li style="margin:.3rem 0;">⭐ Marte — 225 milhões km</li>
+                </ol>
+                <dl>
+                    <dt>Bioluminescência</dt>
+                    <dd>Produção de luz por organismos vivos no oceano profundo</dd>
+                    <dt>Nebulosa</dt>
+                    <dd>Nuvem de gás e poeira no espaço interestelar</dd>
+                </dl>
+            </div>
+
+            <!-- 3. Tabela -->
+            <div class="demo-block" style="grid-column: span 2;">
+                <h3>📊 Tabela — Oceano vs Cosmos</h3>
+                <table>
+                    <caption>Comparativo: Profundidades & Distâncias</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Local</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Dimensão</th>
+                            <th scope="col">Explorado?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fossa das Marianas</td>
+                            <td>🌊 Oceano</td>
+                            <td>11.034 m</td>
+                            <td style="color:var(--clr-success);">✓ Parcialmente</td>
+                        </tr>
+                        <tr>
+                            <td>Zona Abissal</td>
+                            <td>🌊 Oceano</td>
+                            <td>4.000–6.000 m</td>
+                            <td style="color:var(--clr-error);">✗ ~5%</td>
+                        </tr>
+                        <tr>
+                            <td>Lua</td>
+                            <td>⭐ Cosmos</td>
+                            <td>384.400 km</td>
+                            <td style="color:var(--clr-success);">✓ Visitada</td>
+                        </tr>
+                        <tr>
+                            <td>Marte</td>
+                            <td>⭐ Cosmos</td>
+                            <td>225 milhões km</td>
+                            <td style="color:var(--clr-warning);">~ Rovers</td>
+                        </tr>
+                        <tr>
+                            <td>Próxima Centauri</td>
+                            <td>⭐ Cosmos</td>
+                            <td>4,2 anos-luz</td>
+                            <td style="color:var(--clr-error);">✗ Inalcançável</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">Fonte: NASA & NOAA — dados de 2025</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- 4. Mini Formulário -->
+            <div class="demo-block">
+                <h3>📡 Mini Formulário</h3>
+                <div id="sc-success" style="display:none; background:linear-gradient(135deg,var(--clr-success),var(--clr-primary));
+                    color:var(--clr-dark); padding:.8rem; border-radius:8px;
+                    text-align:center; font-weight:700; margin-bottom:1rem;">
+                    🚀 Observação registrada!
+                </div>
+                <div class="form-group">
+                    <label for="sc-nome" style="color:var(--clr-primary); font-size:.85rem; font-weight:600;">Explorador</label>
+                    <input type="text" id="sc-nome" class="sc-input" required placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="sc-email" style="color:var(--clr-primary); font-size:.85rem; font-weight:600;">E-mail</label>
+                    <input type="email" id="sc-email" class="sc-input" required placeholder="email@cosmos.com">
+                </div>
+                <div class="form-group">
+                    <label for="sc-rating" style="color:var(--clr-primary); font-size:.85rem; font-weight:600;">
+                        Profundidade explorada:
+                        <output for="sc-rating" id="sc-output"
+                            style="color:var(--clr-primary); font-weight:700;">5</output>/10
+                    </label>
+                    <input type="range" id="sc-rating" min="1" max="10" value="5"
+                        style="width:100%; accent-color:var(--clr-primary);"
+                        oninput="document.getElementById('sc-output').value=this.value">
+                </div>
+                <div class="form-group">
+                    <label for="sc-msg" style="color:var(--clr-primary); font-size:.85rem; font-weight:600;">Observação</label>
+                    <textarea id="sc-msg" class="sc-input" rows="3" required
+                        minlength="10" placeholder="Descreva sua descoberta..."></textarea>
+                </div>
+                <button onclick="scEnviar()" class="btn btn-primary" style="width:100%;">
+                    Registrar Observação ✉️
+                </button>
+                <p id="sc-status" style="margin-top:.6rem; text-align:center;
+                    font-size:.85rem; min-height:1.2rem;"></p>
+            </div>
+
+            <!-- 5. Canvas de Desenho Livre -->
+            <div class="demo-block">
+                <h3>🎨 Canvas — Desenho Livre</h3>
+                <canvas id="scCanvas" width="400" height="220"
+                    style="width:100%; border-radius:8px; background:#020b18;
+                           cursor:crosshair; border:1px solid rgba(0,212,255,.2);"
+                    aria-label="Canvas para desenho livre"></canvas>
+                <div style="display:flex; gap:.5rem; margin-top:.8rem;
+                    flex-wrap:wrap; align-items:center;">
+                    <label style="color:rgba(232,244,248,.7); font-size:.82rem;">Cor:</label>
+                    <input type="color" id="scCor" value="#00d4ff"
+                        style="height:34px; cursor:pointer; border:none; background:transparent;">
+                    <label style="color:rgba(232,244,248,.7); font-size:.82rem;">Espessura:</label>
+                    <input type="range" id="scTamanho" min="2" max="30" value="4"
+                        style="flex:1; accent-color:var(--clr-primary);">
+                    <button class="btn btn-outline" style="font-size:.78rem; padding:.4rem .8rem;"
+                        onclick="scLimpar()">✕ Limpar</button>
+                </div>
+                <p style="font-size:.75rem; color:rgba(232,244,248,.4); margin-top:.4rem;">
+                    Desenhe livremente no canvas acima 🖌️
+                </p>
+            </div>
+
+            <!-- 6. SVG Animado -->
+            <div class="demo-block">
+                <h3>✨ SVG Animado</h3>
+                <div class="svg-container">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+                        style="width:180px; height:180px;"
+                        role="img" aria-label="Animação SVG — planeta pulsante">
+                        <title>Planeta Pulsante — SVG Animado</title>
+
+                        <!-- Fundo -->
+                        <rect width="200" height="200" fill="#020b18" rx="12"/>
+
+                        <!-- Estrelas -->
+                        <circle cx="20" cy="30" r="1" fill="white" opacity=".8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="170" cy="20" r="1.5" fill="#00d4ff" opacity=".7">
+                            <animate attributeName="opacity" values="0.7;0.1;0.7" dur="1.5s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="50" cy="160" r="1" fill="white" opacity=".6">
+                            <animate attributeName="opacity" values="0.6;0.3;0.6" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="150" cy="170" r="1" fill="#c084fc" opacity=".8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="180" cy="80" r="1.2" fill="white" opacity=".5">
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
+                        </circle>
+
+                        <!-- Onda de pulso -->
+                        <circle cx="100" cy="100" r="60" fill="none"
+                            stroke="#00d4ff" stroke-width="1" opacity=".6">
+                            <animate attributeName="r" from="50" to="90" dur="2.5s"
+                                repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from=".6" to="0" dur="2.5s"
+                                repeatCount="indefinite"/>
+                        </circle>
+
+                        <!-- Planeta -->
+                        <circle cx="100" cy="100" r="45" fill="url(#planetGrad)"/>
+                        <defs>
+                            <radialGradient id="planetGrad" cx="35%" cy="35%">
+                                <stop offset="0%" stop-color="#7c3aed"/>
+                                <stop offset="100%" stop-color="#020b18"/>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Pulso do planeta -->
+                        <circle cx="100" cy="100" r="45" fill="url(#planetGrad)">
+                            <animate attributeName="r" values="43;47;43" dur="1.5s"
+                                repeatCount="indefinite"/>
+                        </circle>
+
+                        <!-- Anel -->
+                        <ellipse cx="100" cy="100" rx="65" ry="18"
+                            fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="3">
+                            <animateTransform attributeName="transform"
+                                type="rotate" from="0 100 100" to="360 100 100"
+                                dur="8s" repeatCount="indefinite"/>
+                        </ellipse>
+
+                        <!-- Texto -->
+                        <text x="100" y="105" text-anchor="middle"
+                            font-size="13" font-weight="bold" fill="white"
+                            font-family="serif">COSMOS</text>
+                    </svg>
+                </div>
+                <p style="font-size:.8rem; color:rgba(232,244,248,.5); text-align:center;">
+                    SVG com <code>&lt;animate&gt;</code> e <code>&lt;animateTransform&gt;</code>
+                </p>
+            </div>
+
+            <!-- 7. Web Storage -->
+            <div class="demo-block">
+                <h3>💾 Web Storage</h3>
+                <p style="color:rgba(232,244,248,.6); font-size:.85rem; margin-bottom:.8rem;">
+                    Salve observações no localStorage ou sessionStorage:
+                </p>
+                <input type="text" id="sc-storage-key" class="sc-input"
+                    placeholder="Chave (ex: estrela-1)">
+                <input type="text" id="sc-storage-value" class="sc-input"
+                    placeholder="Valor (ex: Sirius, magnitude -1.46)">
+                <div style="display:flex; gap:.5rem; margin-bottom:.6rem;">
+                    <button class="btn btn-primary" style="flex:1; font-size:.8rem;"
+                        onclick="scSalvarLocal()">💾 localStorage</button>
+                    <button class="btn btn-outline" style="flex:1; font-size:.8rem;"
+                        onclick="scSalvarSession()">⏱️ sessionStorage</button>
+                </div>
+                <button class="btn btn-outline" style="width:100%; font-size:.8rem; margin-bottom:.6rem;"
+                    onclick="scListar()">📋 Listar tudo</button>
+                <pre id="sc-storage-out">Aguardando dados...</pre>
+            </div>
+
+            <!-- 8. Geolocalização -->
+            <div class="demo-block">
+                <h3>📍 Geolocalização</h3>
+                <p style="color:rgba(232,244,248,.6); font-size:.85rem; margin-bottom:1rem;">
+                    A API Geolocation retorna suas coordenadas no planeta Terra —
+                    útil para mapear expedições oceânicas e observatórios astronômicos.
+                </p>
+                <button class="btn btn-primary" style="width:100%;"
+                    onclick="obterLocalizacao()">
+                    🔭 Obter Minhas Coordenadas
+                </button>
+                <div id="geo-resultado"
+                    style="margin-top:1rem; padding:.8rem;
+                           background:rgba(2,11,24,.8);
+                           border:1px solid rgba(0,212,255,.15);
+                           border-radius:8px; font-size:.88rem;
+                           color:rgba(232,244,248,.7); min-height:60px;">
+                    Aguardando...
+                </div>
+            </div>
+
+            <!-- 9. Drag & Drop -->
+            <div class="demo-block">
+                <h3>🪐 Drag & Drop</h3>
+                <p style="color:rgba(232,244,248,.6); font-size:.85rem; margin-bottom:.8rem;">
+                    Arraste o elemento para a órbita:
+                </p>
+                <div id="drag-source" draggable="true"
+                    style="background:linear-gradient(135deg,#7c3aed,#00d4ff);
+                           color:white; padding:1rem; border-radius:8px;
+                           cursor:grab; text-align:center;
+                           margin-bottom:.8rem; user-select:none; font-weight:600;">
+                    🪐 Arraste-me para a órbita!
+                </div>
+                <div id="drop-target"
+                    style="border:2px dashed rgba(0,212,255,.4); border-radius:8px;
+                           padding:1.5rem; text-align:center;
+                           color:rgba(232,244,248,.4); min-height:80px;
+                           display:flex; align-items:center; justify-content:center;
+                           transition:all .3s; background:rgba(4,21,41,.4);">
+                    🌌 Órbita — solte aqui ↓
+                </div>
+            </div>
+
+            <!-- 10. Clipboard + Dialog -->
+            <div class="demo-block">
+                <h3>📋 Clipboard & &lt;dialog&gt;</h3>
+                <p style="color:rgba(232,244,248,.6); font-size:.85rem; margin-bottom:.6rem;">
+                    Copie esta curiosidade científica:
+                </p>
+                <code id="clipboardText"
+                    style="display:block; background:rgba(2,11,24,.9);
+                           border:1px solid rgba(0,212,255,.15);
+                           padding:.8rem; border-radius:8px; margin-bottom:.8rem;
+                           font-size:.82rem; color:var(--clr-primary);
+                           word-break:break-all; line-height:1.6;">
+O oceano profundo e o espaço sideral compartilham o mesmo mistério: ambos inexplorados em mais de 80% pela humanidade.
+                </code>
+                <button class="btn btn-primary" style="width:100%; margin-bottom:.8rem;"
+                    onclick="copiarTexto()">
+                    📋 Copiar Curiosidade
+                </button>
+                <p id="clipboard-msg"
+                    style="color:var(--clr-success); font-size:.82rem;
+                           min-height:1.2rem; margin-bottom:.8rem;"></p>
+
+                <!-- DIALOG nativo HTML5 -->
+                <button class="btn btn-outline" style="width:100%;"
+                    onclick="document.getElementById('meuDialog').showModal()">
+                    🌊 Abrir &lt;dialog&gt; Nativo
+                </button>
+
+                <dialog id="meuDialog">
+                    <h3>🌊 &lt;dialog&gt; Nativo HTML5</h3>
+                    <p style="color:rgba(232,244,248,.7); margin-bottom:1rem;">
+                        O elemento <code>&lt;dialog&gt;</code> cria modais nativos sem
+                        bibliotecas externas. Suportado em todos os browsers modernos!
+                    </p>
+                    <p style="color:rgba(232,244,248,.5); font-size:.85rem; margin-bottom:1.5rem;">
+                        Assim como o oceano e o cosmos, o HTML5 esconde profundezas
+                        que ainda estamos descobrindo. ✦
+                    </p>
+                    <div style="display:flex; gap:.8rem; justify-content:flex-end;">
+                        <button class="btn btn-primary"
+                            onclick="document.getElementById('meuDialog').close()">
+                            Fechar ✕
+                        </button>
+                    </div>
+                </dialog>
+            </div>
+
+        </div><!-- fim showcase-grid -->
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+        <p class="footer-logo">✦ OCEANO & COSMOS ✦</p>
+        <p>© <time datetime="2025">2025</time> — Showcase HTML5 | Sistema de Informação</p>
+        <p style="margin-top:.3rem;">
+            Todos os recursos HTML5 reunidos em uma única página 🌊⭐
+        </p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+    <script>
+        // ═══ CANVAS DE DESENHO LIVRE ═══
+        const scCanvas = document.getElementById('scCanvas');
+        if (scCanvas) {
+            const scCtx = scCanvas.getContext('2d');
+            let drawing = false;
+
+            // Fundo inicial
+            scCtx.fillStyle = '#020b18';
+            scCtx.fillRect(0, 0, scCanvas.width, scCanvas.height);
+
+            // Estrelinhas decorativas
+            for (let i = 0; i < 40; i++) {
+                scCtx.beginPath();
+                scCtx.arc(
+                    Math.random() * scCanvas.width,
+                    Math.random() * scCanvas.height,
+                    Math.random() * 1.2 + .2, 0, Math.PI * 2
+                );
+                scCtx.fillStyle = `rgba(255,251,230,${Math.random() * .6 + .2})`;
+                scCtx.fill();
+            }
+
+            function getPos(e) {
+                const r = scCanvas.getBoundingClientRect();
+                const scaleX = scCanvas.width  / r.width;
+                const scaleY = scCanvas.height / r.height;
+                return {
+                    x: (e.clientX - r.left) * scaleX,
+                    y: (e.clientY - r.top)  * scaleY
+                };
+            }
+
+            scCanvas.addEventListener('mousedown', e => {
+                drawing = true;
+                const p = getPos(e);
+                scCtx.beginPath();
+                scCtx.moveTo(p.x, p.y);
+            });
+
+            scCanvas.addEventListener('mousemove', e => {
+                if (!drawing) return;
+                const p = getPos(e);
+                scCtx.lineTo(p.x, p.y);
+                scCtx.strokeStyle = document.getElementById('scCor').value;
+                scCtx.lineWidth   = document.getElementById('scTamanho').value;
+                scCtx.lineCap = 'round';
+                scCtx.lineJoin = 'round';
+                scCtx.stroke();
+            });
+
+            scCanvas.addEventListener('mouseup',    () => drawing = false);
+            scCanvas.addEventListener('mouseleave', () => drawing = false);
+
+            // Touch
+            scCanvas.addEventListener('touchstart', e => {
+                e.preventDefault();
+                drawing = true;
+                const p = getPos(e.touches[0]);
+                scCtx.beginPath();
+                scCtx.moveTo(p.x, p.y);
+            }, { passive: false });
+
+            scCanvas.addEventListener('touchmove', e => {
+                e.preventDefault();
+                if (!drawing) return;
+                const p = getPos(e.touches[0]);
+                scCtx.lineTo(p.x, p.y);
+                scCtx.strokeStyle = document.getElementById('scCor').value;
+                scCtx.lineWidth   = document.getElementById('scTamanho').value;
+                scCtx.lineCap = 'round';
+                scCtx.lineJoin = 'round';
+                scCtx.stroke();
+            }, { passive: false });
+
+            scCanvas.addEventListener('touchend', () => drawing = false);
+        }
+
+        function scLimpar() {
+            const c = document.getElementById('scCanvas');
+            const ctx = c.getContext('2d');
+            ctx.fillStyle = '#020b18';
+            ctx.fillRect(0, 0, c.width, c.height);
+            for (let i = 0; i < 40; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random()*c.width, Math.random()*c.height,
+                    Math.random()*1.2+.2, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255,251,230,${Math.random()*.6+.2})`;
+                ctx.fill();
+            }
+        }
+
+        // ═══ MINI FORMULÁRIO ═══
+        function scEnviar() {
+            const nome = document.getElementById('sc-nome').value.trim();
+            const email = document.getElementById('sc-email').value.trim();
+            const msg = document.getElementById('sc-msg').value.trim();
+            const st = document.getElementById('sc-status');
+            const ok = document.getElementById('sc-success');
+
+            if (!nome || !email || !msg || msg.length < 10) {
+                st.textContent = '⚠️ Preencha todos os campos corretamente!';
+                st.style.color = '#ff4d6d';
+                return;
+            }
+
+            st.textContent = '';
+            ok.style.display = 'block';
+            document.getElementById('sc-nome').value = '';
+            document.getElementById('sc-email').value = '';
+            document.getElementById('sc-msg').value = '';
+            document.getElementById('sc-rating').value = 5;
+            document.getElementById('sc-output').value = 5;
+            setTimeout(() => { ok.style.display = 'none'; }, 5000);
+        }
+
+        // ═══ WEB STORAGE ═══
+        function scSalvarLocal() {
+            const k = document.getElementById('sc-storage-key').value.trim();
+            const v = document.getElementById('sc-storage-value').value.trim();
+            if (k && v) { localStorage.setItem(k, v); scListar(); }
+            else alert('Preencha a chave e o valor!');
+        }
+
+        function scSalvarSession() {
+            const k = document.getElementById('sc-storage-key').value.trim();
+            const v = document.getElementById('sc-storage-value').value.trim();
+            if (k && v) { sessionStorage.setItem(k, v); scListar(); }
+            else alert('Preencha a chave e o valor!');
+        }
+
+        function scListar() {
+            const out = document.getElementById('sc-storage-out');
+            let s = '🌊 localStorage:\n';
+            if (localStorage.length === 0) {
+                s += '  (vazio)\n';
+            } else {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    s += `  ${k}: ${localStorage.getItem(k)}\n`;
+                }
+            }
+            s += '\n⭐ sessionStorage:\n';
+            if (sessionStorage.length === 0) {
+                s += '  (vazio)';
+            } else {
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const k = sessionStorage.key(i);
+                    s += `  ${k}: ${sessionStorage.getItem(k)}\n`;
+                }
+            }
+            out.textContent = s;
+        }
+
+        // Inicializa listagem
+        scListar();
+    </script>
+</body>
+</html>
